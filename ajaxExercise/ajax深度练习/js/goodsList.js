@@ -12,24 +12,28 @@ $(function () {
   $('.aui-pagination-next').click(function () {
     let page_MaxNum = $('#aui_page').html()
     if (page < page_MaxNum) {
+      $(this).removeClass('disabled')
       page++;
       getGoodsList(page);
     } else {
+      $(this).addClass('disabled')
       $('.aui-pagination-next').attr("disabled");
     }
   })
   //下一页
   $('.van-icon-arrow-left').click(function () {
     if (page > 1) {
+      $(this).removeClass('disabled')
       page--;
       getGoodsList(page);
     } else {
+      $(this).addClass('disabled')
       $('.aui-pagination-next').attr("disabled");
     }
   })
 
-  $('.aui-list-theme-box').on('click', 'a', function () {
-    let this_id = $(this).attr('data-id');
+  $('.aui-list-theme-box').on('click', '.aui-list-theme-img', function () {
+    let this_id = $(this).parents('a').attr('data-id');
     $.ajax({
       method: 'get',
       url: 'http://shop.meilian.info/api/goods/getinfo',
