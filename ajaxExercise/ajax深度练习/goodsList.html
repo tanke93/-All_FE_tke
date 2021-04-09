@@ -23,96 +23,7 @@
         </div>
       </div>
       <div class="aui-list-theme-box">
-        <!-- <a href="javascript:;" class="aui-list-item">
-          <div class="aui-list-theme-img">
-            <img src="img/pd-013.png" alt="">
-          </div>
-          <div class="aui-list-theme-message">
-            <h3 class="aui-list-theme-title">智能陪护让你的孩子赢在起跑线上面</h3>
-            <h3 class="aui-list-theme-subtitle">预售商品 限时抽取三名幸运奖</h3>
-            <div class="aui-flex">
-              <div class="aui-flex-box">
-                <h2><em>￥</em>648 <i>￥899</i></h2>
-              </div>
-              <div class="aui-coupon"><span class="iconfont icon-gouwuche"></span></div>
-            </div>
-          </div>
-        </a>
-        <a href="javascript:;" class="aui-list-item">
-          <div class="aui-list-theme-img">
-            <img src="img/pd-014.png" alt="">
-          </div>
-          <div class="aui-list-theme-message">
-            <h3 class="aui-list-theme-title">智能陪护让你的孩子赢在起跑线上面</h3>
-            <h3 class="aui-list-theme-subtitle">预售商品 限时抽取三名幸运奖</h3>
-            <div class="aui-flex">
-              <div class="aui-flex-box">
-                <h2><em>￥</em>648 <i>￥899</i></h2>
-              </div>
-              <div class="aui-coupon"><span class="iconfont icon-gouwuche"></span></div>
-            </div>
-          </div>
-        </a>
-        <a href="javascript:;" class="aui-list-item">
-          <div class="aui-list-theme-img">
-            <img src="img/pd-015.png" alt="">
-          </div>
-          <div class="aui-list-theme-message">
-            <h3 class="aui-list-theme-title">智能陪护让你的孩子赢在起跑线上面</h3>
-            <h3 class="aui-list-theme-subtitle">预售商品 限时抽取三名幸运奖</h3>
-            <div class="aui-flex">
-              <div class="aui-flex-box">
-                <h2><em>￥</em>648 <i>￥899</i></h2>
-              </div>
-              <div class="aui-coupon"><span class="iconfont icon-gouwuche"></span></div>
-            </div>
-          </div>
-        </a>
-        <a href="javascript:;" class="aui-list-item">
-          <div class="aui-list-theme-img">
-            <img src="img/pd-016.png" alt="">
-          </div>
-          <div class="aui-list-theme-message">
-            <h3 class="aui-list-theme-title">智能陪护让你的孩子赢在起跑线上面</h3>
-            <h3 class="aui-list-theme-subtitle">预售商品 限时抽取三名幸运奖</h3>
-            <div class="aui-flex">
-              <div class="aui-flex-box">
-                <h2><em>￥</em>648 <i>￥899</i></h2>
-              </div>
-              <div class="aui-coupon"><span class="iconfont icon-gouwuche"></span></div>
-            </div>
-          </div>
-        </a>
-        <a href="javascript:;" class="aui-list-item">
-          <div class="aui-list-theme-img">
-            <img src="img/pd-015.png" alt="">
-          </div>
-          <div class="aui-list-theme-message">
-            <h3 class="aui-list-theme-title">智能陪护让你的孩子赢在起跑线上面</h3>
-            <h3 class="aui-list-theme-subtitle">预售商品 限时抽取三名幸运奖</h3>
-            <div class="aui-flex">
-              <div class="aui-flex-box">
-                <h2><em>￥</em>648 <i>￥899</i></h2>
-              </div>
-              <div class="aui-coupon"><span class="iconfont icon-gouwuche"></span></div>
-            </div>
-          </div>
-        </a>
-        <a href="javascript:;" class="aui-list-item">
-          <div class="aui-list-theme-img">
-            <img src="img/pd-016.png" alt="">
-          </div>
-          <div class="aui-list-theme-message">
-            <h3 class="aui-list-theme-title">智能陪护让你的孩子赢在起跑线上面</h3>
-            <h3 class="aui-list-theme-subtitle">预售商品 限时抽取三名幸运奖</h3>
-            <div class="aui-flex">
-              <div class="aui-flex-box">
-                <h2><em>￥</em>648 <i>￥899</i></h2>
-              </div>
-              <div class="aui-coupon"><span class="iconfont icon-gouwuche"></span></div>
-            </div>
-          </div>
-        </a> -->
+
       </div>
       <div class="aui-pagination">
         <div class="aui-pagination-prev disabled">
@@ -128,13 +39,13 @@
     </section>
   </section>
   <div class="van-hairline--top-bottom van-tabbar van-tabbar--fixed">
-    <div class="van-tabbar-item van-tabbar-item--active">
+    <div class="van-tabbar-item van-tabbar-item--active" id="goods_list">
       <div class="van-tabbar-item__icon">
         <i class="van-icon van-icon-wap-home-o"></i>
       </div>
       <div class="van-tabbar-item__text">商品</div>
     </div>
-    <div class="van-tabbar-item">
+    <div class="van-tabbar-item" id="shopping_cart">
       <div class="van-tabbar-item__icon">
         <i class="van-icon van-icon-shopping-cart-o"></i>
       </div>
@@ -153,7 +64,7 @@
       <h3 class="aui-list-theme-subtitle">{{$value.content}}</h3>
       <div class="aui-flex">
         <div class="aui-flex-box">
-          <h2><em>￥</em>{{$value.price}} <i>￥{{$value.price*2}}</i></h2>
+          <h2><em>￥</em><span>{{$value.price}}</span> <i>￥{{$value.price*2}}</i></h2>
         </div>
         <div class="aui-coupon"><span class="iconfont icon-gouwuche"></span></div>
       </div>
