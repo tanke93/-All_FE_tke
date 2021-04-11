@@ -23,10 +23,10 @@
     selectProduct();
   });
   //全选产品
-  // $('.product-al').on
   $('.product-all').on('click', function () {
     var fxk = $(".product-em");
     var qx = $(".product-all em");
+    console.log(fxk, qx);
     qx.toggleClass("product-all-on");
     if ($(this).find(".product-all em").is(".product-all-on")) {
       fxk.addClass("product-xz");
@@ -35,6 +35,7 @@
     }
     totalPrice();
     count()
+    // selectProduct();
   });
   //删除产品
   $('.product').on('click', '.product-del', function () {
@@ -60,13 +61,14 @@
   })
 
 
-  // totalPrice();
-  // count();
-  // emptyCart();
+
 
   $('.icon-fanhui').on('click', function () {
     window.location.href = './goodsList.html'
   })
+  // totalPrice();
+  // count();
+  // emptyCart();
 });
 
 let token = localStorage.getItem('token')
@@ -87,6 +89,7 @@ function getCartList () {
 //选中产品
 function selectProduct () {
   var xz = $(".product-em");
+
   var xz1 = $(".product-xz");
   if (xz1.length == xz.length) {
     $(".product-all em").addClass("product-all-on");
