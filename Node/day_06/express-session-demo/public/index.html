@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  首页
+  <button id="logoutBtn">退出登录</button>
+
+  <script>
+    (() => {
+      const xhr = new XMLHttpRequest()
+      xhr.open('get', 'http://localhost:8080/username')
+      xhr.onreadystatechange = () => {
+        if (xhr.status === 200 && xhr.readyState === 4) {
+          const res = JSON.parse(xhr.responseText)
+          console.log(res)
+          if (res.status === 0) {
+            alert(`欢迎你，${res.username}`)
+          } else {
+            alert('你还没有登录，请先登录后再来')
+            // 跳转到登录页
+            location.href = '/login.html'
+          }
+        }
+      }
+      xhr.send()
+
+      document.querySelector('#logoutBtn').addEventListener('click', () => {
+        const xhr = new XMLHttpRequest()
+        xhr.open('get', 'http://localhost:80/logout')
+        xhr.onreadystatechange = () => {
+          if (xhr.status === 200 && xhr.readyState === 4) {
+            const res = JSON.parse(xhr.responseText)
+            console.log(res)
+            if (res.status === 0) {
+              alert('退出成功')
+              location.href = '/login.html'
+            } else {
+              alert('退出失败')
+            }
+          }
+        }
+        xhr.send()
+      })
+    })()
+  </script>
+</body>
+
+</html>
