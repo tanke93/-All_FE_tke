@@ -1,0 +1,21 @@
+{
+  "name": "webpack_demo02",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "css-loader": "^5.2.4",
+    "style-loader": "^2.0.0",
+    "webpack": "^5.35.0",
+    "webpack-cli": "^4.6.0"
+  },
+  "scripts": {
+    "build": "npx webpack"
+  },
+  "dependencies": {
+    "html-webpack-plugin": "^5.3.1",
+    "jquery": "^3.6.0",
+    "less": "^4.1.1",
+    "less-loader": "^8.1.1"
+  }
+}
