@@ -67,6 +67,10 @@ export default {
     async onLoad () {//触底事件(加载下一页数据) 数据会自动把loading改为true
       this.page++
       const res = await this.getListFn()
+      if (res.data.result.songCount === 0) {
+        this.finished = true
+        return
+      }
       this.resultList = [...this.resultList, ...res.data.result.songs]
       this.loading = false //手动改回false
     }

@@ -103,6 +103,9 @@ export default {
     showLyric () {
       // 监听播放audio进度, 切换歌词显示
       this.$refs.audio.addEventListener('timeupdate', () => {
+        if (!this.$refs.audio) {
+          return
+        }
         let curTime = Math.floor(this.$refs.audio.currentTime)
         // 避免空白出现
         if (this.lyric[curTime]) {

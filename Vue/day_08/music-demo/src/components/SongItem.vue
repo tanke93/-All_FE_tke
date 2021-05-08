@@ -9,10 +9,10 @@
 <script>
 export default {
   props: {
-    name: String,
-    author: String,
-    album: String,
-    id: Number
+    name: String,//歌名
+    author: String,//歌手
+    album: String,//专辑
+    id: Number//歌曲id
   },
   methods: {
     playFn () {
