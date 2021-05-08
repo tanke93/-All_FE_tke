@@ -8,11 +8,9 @@
       </van-col>
     </van-row>
     <p class="title">最新音乐</p>
-    <van-cell title="单元格" center label="描述信息">
-      <template #right-icon>
-        <van-icon size="0.6rem" name="play-circle-o" />
-      </template>
-    </van-cell>
+    <SongItem v-for="obj in songList" :key="obj.id" :name="obj.name" :author="obj.song.artists[0].name"
+      :album="obj.song.album.name" :id="obj.id">
+    </SongItem>
   </div>
 </template>
 
@@ -23,19 +21,30 @@
 // 3、调整间距和属性值
 // 4、调佣封装的api/index.js推荐歌单的api方法
 // 5、拿到数据保存到data里变量-去上面循环标签
-import { recommendMusicAPI } from '@/api';
+import { recommendMusicAPI, newMusicAPI } from '@/api';
+import SongItem from '@/components/SongItem'
 export default {
   data () {
     return {
-      reList: []
+      reList: [],//推荐歌单数据
+      songList: []//最新音乐数据
     }
   },
   async created () {
     const res = await recommendMusicAPI({
       limit: 6
     })
-    console.log(res);
+    // console.log(res);
     this.reList = res.data.result
+
+    const res2 = await newMusicAPI({
+      limit: 20
+    })
+    console.log(res2);
+    this.songList = res2.data.result
+  },
+  components: {
+    SongItem
   }
 }
 </script>
@@ -60,5 +69,8 @@ export default {
   -webkit-box-orient: vertical; /** 设置或检索伸缩盒对象的子元素的排列方式 **/
   -webkit-line-clamp: 2; /** 显示的行数 **/
   overflow: hidden; /** 隐藏超出的内容 **/
+}
+.van-cell {
+  border-bottom: 1px solid lightgray;
 }
 </style>

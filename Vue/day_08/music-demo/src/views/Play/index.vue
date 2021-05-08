@@ -1,35 +1,20 @@
 <template>
   <div class="play">
     <!-- 模糊背景(靠样式设置), && 有属性继续用, 固定定位 -->
-    <div
-      class="song-bg"
-      :style="`background-image: url(${
+    <div class="song-bg" :style="`background-image: url(${
         songInfo && songInfo.al && songInfo.al.picUrl
-      }?imageView&thumbnail=360y360&quality=75&tostatic=0);`"
-    ></div>
+      }?imageView&thumbnail=360y360&quality=75&tostatic=0);`"></div>
     <!-- 播放页头部导航 -->
     <div class="header">
-      <van-icon
-        name="arrow-left"
-        size="20"
-        class="left-incon"
-        @click="$router.back()"
-      />
+      <van-icon name="arrow-left" size="20" class="left-incon" @click="$router.back()" />
     </div>
     <!-- 播放页内容容器 -->
     <div class="song-wrapper">
-      <div
-        class="song-turn ani"
-        :style="`animation-play-state:${playState ? 'running' : 'paused'}`"
-      >
+      <div class="song-turn ani" :style="`animation-play-state:${playState ? 'running' : 'paused'}`">
         <div class="song-img">
-          <img
-            style="width: 100%"
-            :src="`${
+          <img style="width: 100%" :src="`${
               songInfo && songInfo.al && songInfo.al.picUrl
-            }?imageView&thumbnail=360y360&quality=75&tostatic=0`"
-            alt=""
-          />
+            }?imageView&thumbnail=360y360&quality=75&tostatic=0`" alt="" />
         </div>
       </div>
       <!-- 播放盒子 -->
@@ -39,11 +24,9 @@
       <!-- 播放歌词 -->
       <div class="song-msg">
         <h2 class="m-song-h2">
-          <span class="m-song-sname"
-            >{{ songInfo.name }}-{{
+          <span class="m-song-sname">{{ songInfo.name }}-{{
               songInfo && songInfo.ar && songInfo.ar[0].name
-            }}</span
-          >
+            }}</span>
         </h2>
         <div class="lrcContent">
           <p class="lrc">{{ curLyric }}</p>
@@ -54,24 +37,20 @@
     <!-- 播放音乐真正的标签
       看接口文档: 音乐地址需要带id去获取(但是有的歌曲可能404)
      -->
-    <audio
-      ref="audio"
-      preload="true"
-      :src="`https://music.163.com/song/media/outer/url?id=${id}.mp3`"
-    ></audio>
+    <audio ref="audio" preload="true" :src="`https://music.163.com/song/media/outer/url?id=${id}.mp3`"></audio>
   </div>
 </template>
 
 <script>
 // 获取歌曲详情和 歌曲的歌词接口
-// import { getSongByIdAPI, getLyricByIdAPI } from '@/api'
+import { getSongByIdAPI, getLyricByIdAPI } from '@/api'
 import { Icon } from 'vant'
 export default {
   components: {
     [Icon.name]: Icon,
   },
   name: 'play',
-  data() {
+  data () {
     return {
       playState: false,
       id: this.$route.query.id,
@@ -82,12 +61,12 @@ export default {
     }
   },
   computed: {
-    needleDeg() {
+    needleDeg () {
       return this.playState ? '-7deg' : '-38deg'
     }
   },
   methods: {
-    async getSong() {
+    async getSong () {
       const res = await getSongByIdAPI(this.id)
       this.songInfo = res.data.songs[0]
       // 处理歌词
@@ -97,7 +76,7 @@ export default {
       // 初始化完毕先显示零秒歌词
       this.curLyric = this.lyric[0]
     },
-    _formatLyr(lyricStr) {
+    _formatLyr (lyricStr) {
       // 可以看network观察歌词数据是一个大字符串, 进行拆分.
       let reg = /\[.+?\]/g
       let timeArr = lyricStr.match(reg)
@@ -113,7 +92,7 @@ export default {
       // console.log(lyricObj);
       return lyricObj
     },
-    audioStart() {
+    audioStart () {
       if (!this.playState) {
         this.$refs.audio.play()
       } else {
@@ -121,7 +100,7 @@ export default {
       }
       this.playState = !this.playState
     },
-    showLyric() {
+    showLyric () {
       // 监听播放audio进度, 切换歌词显示
       this.$refs.audio.addEventListener('timeupdate', () => {
         let curTime = Math.floor(this.$refs.audio.currentTime)
@@ -135,7 +114,7 @@ export default {
       })
     }
   },
-  mounted() {
+  mounted () {
     this.getSong()
     this.showLyric()
     console.log(this.$route.query.id);
@@ -172,14 +151,14 @@ export default {
   opacity: 1;
   filter: blur(25px);
 }
-.song-bg::before{
+.song-bg::before {
   content: " ";
   background: rgba(0, 0, 0, 0.5);
   position: absolute;
   left: 0;
   top: 0;
   right: 0;
-  bottom:0;
+  bottom: 0;
 }
 .song-wrapper {
   position: fixed;

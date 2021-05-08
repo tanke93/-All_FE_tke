@@ -1,10 +1,12 @@
 <template>
   <div>
-    <van-nav-bar :title="activeTitle" />
+    <van-nav-bar :title="activeTitle" fixed />
     <!-- <van-nav-bar :title="this.$route.meta.title" /> -->
 
     <!-- 二级路由 -->
-    <router-view></router-view>
+    <div class="main">
+      <router-view></router-view>
+    </div>
     <van-tabbar route>
       <van-tabbar-item replace to="/layout/home" icon="home-o">首页</van-tabbar-item>
       <van-tabbar-item replace to="/layout/search" icon="search">搜索</van-tabbar-item>
