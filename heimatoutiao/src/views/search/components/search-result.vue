@@ -41,9 +41,9 @@ export default {
           q: this.searchText//查询关键字
         })
 
-        if (Math.random() > 0.5) {
-          JSON.parse('addasdsa')
-        }
+        // if (Math.random() > 0.5) {
+        //   JSON.parse('addasdsa')
+        // }
         const { results } = data.data
         this.list.push(...results)
 

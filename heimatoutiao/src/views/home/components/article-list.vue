@@ -51,7 +51,6 @@ export default {
         // if (Math.random() > 0.5) {
         //   JSON.parse('sdfsdf')
         // }
-        console.log(data);
         const { results } = data.data
         this.list.push(...results)
         this.loading = false

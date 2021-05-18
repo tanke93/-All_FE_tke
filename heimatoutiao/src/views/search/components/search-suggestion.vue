@@ -27,7 +27,6 @@ export default {
   watch: {
     searchText: {
       handler: debounce(function (value) {
-        console.log(value);
         this.loadgetSearchSuggestions(value)
       }, 200),
       immediate: true
