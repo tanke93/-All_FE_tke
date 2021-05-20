@@ -1,7 +1,7 @@
 <template>
   <div class="search-container">
     <form class="search-form" action="/">
-      <van-search v-model="searchText" show-action placeholder="请输入搜索关键词" shape="round" background="#3296fa"
+      <van-search v-model.trim="searchText" show-action placeholder="请输入搜索关键词" shape="round" background="#3296fa"
         @search="onSearch" @cancel="onCancel" @focus="isResultShow = false" />
     </form>
     <!-- 搜索结果 -->
@@ -81,6 +81,7 @@ export default {
 .search-container {
   padding-top: 108px;
   .van-search__action {
+    background-color: #3296fa;
     color: #fff;
   }
   .search-form {

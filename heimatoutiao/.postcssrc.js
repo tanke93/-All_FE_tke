@@ -8,7 +8,8 @@ module.exports = {
         // return file.indexOf('vant') !== -1 ? 37.5 : 75
         return file.includes('vant') ? 37.5 : 75
       },//基准值
-      propList: ['*']
+      propList: ['*'],
+      exclude: 'github-markdown'
     }
   }
 }
