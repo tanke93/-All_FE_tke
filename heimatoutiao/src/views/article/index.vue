@@ -57,7 +57,8 @@
           <van-icon name="comment-o" info="123" color="#777" />
           <ColloectArticle v-model="article.is_collected" class="btn-item" :article-id="article.art_id" />
           <!-- <van-icon color="#777" name="star-o" /> -->
-          <van-icon color="#777" name="good-job-o" />
+          <LikeArticle class="btn-item" v-model="article.attitude" :article-id="article.art_id" />
+          <!-- <van-icon color="#777" name="good-job-o" /> -->
           <van-icon name="share" color="#777777"></van-icon>
         </div>
         <!-- /底部区域 -->
@@ -87,11 +88,13 @@ import { getArticleById } from "@/api/article";
 import { ImagePreview } from 'vant'
 import FollowUser from '@/components/follow-user'
 import ColloectArticle from '@/components/collect-article'
+import LikeArticle from '@/components/like-article'
 export default {
   name: 'ArticleIndex',
   components: {
     FollowUser,
-    ColloectArticle
+    ColloectArticle,
+    LikeArticle
   },
   props: {
     articleId: {

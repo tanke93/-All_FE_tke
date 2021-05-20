@@ -1,15 +1,16 @@
 <template>
-  <van-button :icon="value ? 'star':'star-o'" :class="{collected:value}" :loading="loading" @click="onCollect" />
+  <van-button :icon="value ===1 ? 'good-job':'good-job-o'" :class="{liked :value === 1}" :loading="loading"
+    @click="onCollect" />
 </template>
 
 <script>
-import { addCollect, deleteCollect } from '@/api/article'
+import { addLike, deleteLike } from "@/api/article";
 export default {
-  name: "ColloectArticle",
+  name: "LikeArticle",
   components: {},
   props: {
     value: {
-      type: Boolean,
+      type: [Number],
       required: true
     },
     articleId: {
@@ -30,17 +31,17 @@ export default {
     async onCollect () {
       this.loading = true
       try {
-        //已收藏，就取消收藏
-        if (this.value) {
-          await deleteCollect(this.articleId)
+        let status = -1
+        if (this.value === 1) {
+          //已点赞，则取消点赞
+          await deleteLike(this.articleId)
         } else {
-          //反之，就添加收藏
-          await addCollect(this.articleId)
+          //未点赞，则添加点赞
+          await addLike(this.articleId)
+          status = 1
         }
-        //传给父组件，更新试图
-        this.$emit('input', !this.value)
-
-        this.$toast.success(!this.value ? '收藏成功' : '取消收藏')
+        this.$emit('input', status)
+        this.$toast.success(status === 1 ? '点赞成功' : '取消点赞')
       } catch (error) {
         this.$toast('操作失败，请重试！')
       }
@@ -50,9 +51,9 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-.collected {
+.liked {
   .van-icon {
-    color: #ffa500;
+    color: #e5645f;
   }
 }
 </style>

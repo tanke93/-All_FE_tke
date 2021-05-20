@@ -94,7 +94,7 @@ export default {
         const { data } = await getUserInfo()
         this.userInfo = data.data
       } catch (err) {
-        this.$toast('获取数据失败，请稍后重试')
+        this.$toast('您登录时间过长，请重新登录！')
       }
     }
   }
