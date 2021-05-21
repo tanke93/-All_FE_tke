@@ -1,7 +1,10 @@
 <template>
   <div class="channel-edit">
     <van-cell :border="false">
-      <div slot="title" class="title-text">我的频道</div>
+      <div
+        slot="title"
+        class="title-text"
+      >我的频道</div>
       <van-button
         class="edit-btn"
         type="danger"
@@ -11,22 +14,41 @@
         size="mini"
       >{{ isShow?'完成':'编辑' }}</van-button>
     </van-cell>
-    <van-grid class="my-grid" :gutter="10" :column-num="3">
+    <van-grid
+      class="my-grid"
+      :gutter="10"
+      :column-num="3"
+    >
       <van-grid-item
         class="grid-item"
         v-for="(channel,index) in myChannels"
         :key="channel.id"
         @click="onMyChannelClick(channel ,index)"
       >
-        <van-icon v-show="isShow && !fiexdChannels.includes(channel.id)" slot="icon" name="clear"></van-icon>
-        <span class="text" :class="{active:active === index}" slot="text">{{channel.name}}</span>
+        <van-icon
+          v-show="isShow && !fiexdChannels.includes(channel.id)"
+          slot="icon"
+          name="clear"
+        ></van-icon>
+        <span
+          class="text"
+          :class="{active:active === index}"
+          slot="text"
+        >{{channel.name}}</span>
       </van-grid-item>
     </van-grid>
     <!-- 频道推荐 -->
     <van-cell :border="false">
-      <div slot="title" class="title-text">频道推荐</div>
+      <div
+        slot="title"
+        class="title-text"
+      >频道推荐</div>
     </van-cell>
-    <van-grid class="recommend-grid" :gutter="10" :column-num="3">
+    <van-grid
+      class="recommend-grid"
+      :gutter="10"
+      :column-num="3"
+    >
       <van-grid-item
         class="grid-item"
         v-for="(channel,index) in recommendChannels"
@@ -43,7 +65,7 @@
 import {
   getAllChannels,
   addUserChannel,
-  deleteUserChannel,
+  deleteUserChannel
 } from '@/api/channel'
 import { mapState } from 'vuex'
 import { setItem } from '@/utils/storage'
@@ -52,23 +74,23 @@ export default {
   props: {
     myChannels: {
       type: Array,
-      require: true,
+      require: true
     },
     active: {
       type: Number,
-      require: true,
-    },
+      require: true
+    }
   },
-  data() {
+  data () {
     return {
-      allChannels: [], //所有频道
+      allChannels: [], // 所有频道
       isShow: false,
-      fiexdChannels: [0],
+      fiexdChannels: [0]
     }
   },
   computed: {
     ...mapState(['user']),
-    recommendChannels() {
+    recommendChannels () {
       // 方法二
       return this.allChannels.filter((channel) => {
         return !this.myChannels.find((myChannel) => {
@@ -87,13 +109,13 @@ export default {
       //   }
       // });
       // return channels
-    },
+    }
   },
-  created() {
+  created () {
     this.loadAllChannels()
   },
   methods: {
-    async loadAllChannels() {
+    async loadAllChannels () {
       try {
         const { data } = await getAllChannels()
         this.allChannels = data.data.channels
@@ -102,31 +124,31 @@ export default {
         this.$toast('数据获取失败')
       }
     },
-    async onAddChannel(channel) {
+    async onAddChannel (channel) {
       this.myChannels.push(channel)
       // 数据持久化
       if (this.user) {
         try {
           await addUserChannel({
-            id: channel.id, //频道ID
-            seq: this.myChannels.length, //序号
+            id: channel.id, // 频道ID
+            seq: this.myChannels.length // 序号
           })
         } catch (error) {
           this.$toast('保存失败，请稍后重试')
         }
       } else {
-        //未登录，把数据存储到本地
+        // 未登录，把数据存储到本地
         setItem('TOUTIAO_CHANNELS', this.myChannels)
       }
     },
-    onMyChannelClick(channel, index) {
+    onMyChannelClick (channel, index) {
       if (this.isShow) {
         if (this.fiexdChannels.includes(channel.id)) {
           return
         }
-        //删除频道项
+        // 删除频道项
         this.myChannels.splice(index, 1)
-        //编辑状态 执行删除
+        // 编辑状态 执行删除
         if (index <= this.active) {
           this.$emit('update-active', this.active - 1, true)
         }
@@ -137,7 +159,7 @@ export default {
         this.$emit('update-active', index, false)
       }
     },
-    async deleteChannel(channel) {
+    async deleteChannel (channel) {
       try {
         if (this.user) {
           await deleteUserChannel(channel.id)
@@ -147,8 +169,8 @@ export default {
       } catch (error) {
         this.$toast('操作失败,请稍后重试')
       }
-    },
-  },
+    }
+  }
 }
 </script>
 

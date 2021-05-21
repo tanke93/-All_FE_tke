@@ -26,38 +26,38 @@ export default {
   name: 'FollowUser',
   components: {},
   model: {
-    //自定义v-model的名称
-    prop: 'isFollowed', //默认是value
-    event: 'update-is_followed', //默认是input
+    // 自定义v-model的名称
+    prop: 'isFollowed', // 默认是value
+    event: 'update-is_followed' // 默认是input
   },
   props: {
     isFollowed: {
       type: Boolean,
-      required: true,
+      required: true
     },
     userId: {
       type: [Number, String, Object],
-      required: true,
-    },
+      required: true
+    }
   },
-  data() {
+  data () {
     return {
-      loading: false,
+      loading: false
     }
   },
   watch: {},
   computed: {},
-  created() {},
-  mounted() {},
+  created () { },
+  mounted () { },
   methods: {
-    async onFollow() {
+    async onFollow () {
       this.loading = true
       try {
         if (this.isFollowed) {
-          //已关注 取消关注
+          // 已关注 取消关注
           await deleteFollow(this.userId)
         } else {
-          //没有关注 添加关注
+          // 没有关注 添加关注
           await addFollow(this.userId)
         }
         // this.article.is_followed = !this.article.is_followed
@@ -75,8 +75,8 @@ export default {
         }
       }
       this.loading = false
-    },
-  },
+    }
+  }
 }
 </script>
 <style lang="less" scoped>

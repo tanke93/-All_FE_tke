@@ -16,13 +16,13 @@ export const sendSms = mobile => {
   })
 }
 
-//获取用户个人信息
+// 获取用户个人信息
 export const getUserInfo = () => {
   return request({
     method: 'GET',
-    url: `/v1_0/user`
+    url: '/v1_0/user'
     // headers: {
-    //   Authorization: `Bearer ${store.state.user.token}`
+    // Authorization: `Bearer ${store.state.user.token}`
     // }
   })
 }

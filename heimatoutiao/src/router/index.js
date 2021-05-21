@@ -19,7 +19,7 @@ const routes = [
     component: () => import('@/views/layout'),
     children: [
       {
-        path: '',//默认子路由 只能有一个
+        path: '', // 默认子路由 只能有一个
         name: 'home',
         component: () => import('@/views/home')
       },
@@ -37,7 +37,7 @@ const routes = [
         path: '/my',
         name: 'my',
         component: () => import('@/views/my')
-      },
+      }
     ]
   },
   {

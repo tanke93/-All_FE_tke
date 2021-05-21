@@ -6,7 +6,11 @@
         &nbsp;&nbsp;
         <span @click="isDeleteShow = false">完成</span>
       </div>
-      <van-icon v-else name="delete" @click="isDeleteShow = true" />
+      <van-icon
+        v-else
+        name="delete"
+        @click="isDeleteShow = true"
+      />
     </van-cell>
     <van-cell
       :title="item"
@@ -14,7 +18,10 @@
       :key="index"
       @click="onSearchItemClick(item, index)"
     >
-      <van-icon name="close" v-show="isDeleteShow" />
+      <van-icon
+        name="close"
+        v-show="isDeleteShow"
+      />
     </van-cell>
   </div>
 </template>
@@ -26,27 +33,27 @@ export default {
   props: {
     searchHistories: {
       type: Array,
-      required: true,
-    },
+      required: true
+    }
   },
-  data() {
+  data () {
     return {
-      isDeleteShow: false,
+      isDeleteShow: false
     }
   },
   watch: {},
   computed: {},
-  created() {},
-  mounted() {},
+  created () { },
+  mounted () { },
   methods: {
-    onSearchItemClick(item, index) {
+    onSearchItemClick (item, index) {
       if (this.isDeleteShow) {
         this.searchHistories.splice(index, 1)
       } else {
         this.$emit('search', item)
       }
-    },
-  },
+    }
+  }
 }
 </script>
 <style lang="less" scoped>

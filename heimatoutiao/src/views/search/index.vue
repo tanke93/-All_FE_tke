@@ -1,6 +1,9 @@
 <template>
   <div class="search-container">
-    <form class="search-form" action="/">
+    <form
+      class="search-form"
+      action="/"
+    >
       <van-search
         v-model.trim="searchText"
         show-action
@@ -13,9 +16,16 @@
       />
     </form>
     <!-- 搜索结果 -->
-    <search-result v-if="isResultShow" :searchText="searchText" />
+    <search-result
+      v-if="isResultShow"
+      :searchText="searchText"
+    />
     <!-- 联想建议 -->
-    <search-suggestion v-else-if="searchText" :searchText="searchText" @search="onSearch" />
+    <search-suggestion
+      v-else-if="searchText"
+      :searchText="searchText"
+      @search="onSearch"
+    />
     <!-- 历史记录 -->
     <search-history
       v-else
@@ -39,34 +49,33 @@ export default {
     SearchHistory,
     SearchResult,
     SearchSuggestion,
-    [Dialog.Component.name]: Dialog.Component,
+    [Dialog.Component.name]: Dialog.Component
   },
   props: {},
-  data() {
+  data () {
     return {
       searchText: '',
       isResultShow: false,
-      searchHistories: getItem('TOUTIAO_SEARCH_HISTORIES') || [], //搜索的历史记录
+      searchHistories: getItem('TOUTIAO_SEARCH_HISTORIES') || [] // 搜索的历史记录
     }
   },
   watch: {
-    searchHistories(value) {
+    searchHistories (value) {
       setItem('TOUTIAO_SEARCH_HISTORIES', value)
-    },
+    }
   },
   computed: {},
-  created() {},
-  mounted() {},
+  created () { },
+  mounted () { },
   methods: {
-    onSearch(val) {
-      if (val.trim() == '') {
+    onSearch (val) {
+      if (val.trim() === '') {
         this.$toast('搜索内容不能为空！')
         this.searchText = ''
         return
       }
       this.searchText = val.trim()
-      //存储搜索历史记录
-
+      // 存储搜索历史记录
       // const index = this.searchHistories.indexOf(val)
       // if (index !== -1) {
       //   this.searchHistories.splice(index, 1)
@@ -76,18 +85,18 @@ export default {
 
       this.isResultShow = true
     },
-    onCancel() {
+    onCancel () {
       this.$router.back()
     },
-    clearSearchHistories() {
+    clearSearchHistories () {
       Dialog.confirm({
-        message: '确定要清空记录吗？',
+        message: '确定要清空记录吗？'
       }).then(() => {
         this.searchHistories = []
         this.$refs.child.isDeleteShow = false
       })
-    },
-  },
+    }
+  }
 }
 </script>
 <style lang="less" scoped>

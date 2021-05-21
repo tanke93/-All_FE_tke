@@ -1,13 +1,23 @@
 <template>
   <div class="login-container">
     <!-- 导航栏 -->
-    <van-nav-bar class="page-nav-bar" title="登录">
-      <van-icon slot="left" name="cross" @click="$router.back()" />
+    <van-nav-bar
+      class="page-nav-bar"
+      title="登录"
+    >
+      <van-icon
+        slot="left"
+        name="cross"
+        @click="$router.back()"
+      />
     </van-nav-bar>
     <!-- /导航栏 -->
 
     <!-- 登录表单 -->
-    <van-form ref="loginForm" @submit="onSubmit">
+    <van-form
+      ref="loginForm"
+      @submit="onSubmit"
+    >
       <van-field
         v-model="user.mobile"
         name="mobile"
@@ -16,7 +26,10 @@
         type="number"
         maxlength="11"
       >
-        <i slot="left-icon" class="toutiao toutiao-shouji"></i>
+        <i
+          slot="left-icon"
+          class="toutiao toutiao-shouji"
+        ></i>
       </van-field>
       <van-field
         v-model="user.code"
@@ -26,7 +39,10 @@
         type="number"
         maxlength="6"
       >
-        <i slot="left-icon" class="toutiao toutiao-yanzhengma"></i>
+        <i
+          slot="left-icon"
+          class="toutiao toutiao-yanzhengma"
+        ></i>
         <template #button>
           <van-count-down
             v-if="isCountDownShow"
@@ -46,7 +62,12 @@
         </template>
       </van-field>
       <div class="login-btn-wrap">
-        <van-button class="login-btn" block type="info" native-type="submit">登录</van-button>
+        <van-button
+          class="login-btn"
+          block
+          type="info"
+          native-type="submit"
+        >登录</van-button>
       </div>
     </van-form>
     <!-- /登录表单 -->
@@ -58,49 +79,49 @@ export default {
   name: 'LoginIndex',
   components: {},
   props: {},
-  data() {
+  data () {
     return {
       user: {
         mobile: '',
-        code: '',
+        code: ''
       },
       userFormRules: {
         mobile: [
           {
             required: true,
-            message: '手机号码不能为空',
+            message: '手机号码不能为空'
           },
           {
             pattern: /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/,
-            message: '手机号格式错误',
-          },
+            message: '手机号格式错误'
+          }
         ],
         code: [
           {
             required: true,
-            message: '验证码不能为空',
+            message: '验证码不能为空'
           },
           {
             pattern: /^\d{6}$/,
-            message: '验证码格式错误',
-          },
-        ],
+            message: '验证码格式错误'
+          }
+        ]
       },
-      isCountDownShow: false, // 是否展示倒计时
+      isCountDownShow: false // 是否展示倒计时
     }
   },
   computed: {},
   watch: {},
-  created() {},
-  mounted() {},
+  created () { },
+  mounted () { },
   methods: {
-    async onSubmit() {
+    async onSubmit () {
       // const user = this.user
 
       this.$toast.loading({
         message: '登录中...',
         duration: 0, // 持续时间，0表示持续展示不停止
-        forbidClick: true, // 是否禁止背景点击
+        forbidClick: true // 是否禁止背景点击
       })
 
       try {
@@ -118,7 +139,7 @@ export default {
         }
       }
     },
-    async onSendSms() {
+    async onSendSms () {
       try {
         await this.$refs.loginForm.validate('mobile')
       } catch (err) {
@@ -138,8 +159,8 @@ export default {
           this.$toast('发送失败，请稍后重试')
         }
       }
-    },
-  },
+    }
+  }
 }
 </script>
 <style scoped lang="less">

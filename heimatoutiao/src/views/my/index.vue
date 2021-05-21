@@ -1,57 +1,133 @@
 <template>
   <div class="my-container">
-    <div v-if="!user" class="header not-login">
-      <div class="login-btn" @click="$router.push('/login')">
-        <img class="mobile-img" src="~@/assets/mobile.png" />
+    <div
+      v-if="!user"
+      class="header not-login"
+    >
+      <div
+        class="login-btn"
+        @click="$router.push('/login')"
+      >
+        <img
+          class="mobile-img"
+          src="~@/assets/mobile.png"
+        />
         <span class="text">登录 / 注册</span>
       </div>
     </div>
-    <div v-else class="header user-info">
+    <div
+      v-else
+      class="header user-info"
+    >
       <div class="base-info">
         <div class="left">
-          <van-image class="avatar" :src="userInfo.photo" round fit="cover" />
+          <van-image
+            class="avatar"
+            :src="userInfo.photo"
+            round
+            fit="cover"
+          />
           <span class="name">{{userInfo.name}}</span>
         </div>
         <div class="right">
-          <van-button size="mini" round>编辑资料</van-button>
+          <van-button
+            size="mini"
+            round
+          >编辑资料</van-button>
         </div>
       </div>
       <div class="data-stats">
-        <van-grid class="van-grid" :border="false">
+        <van-grid
+          class="van-grid"
+          :border="false"
+        >
           <van-grid-item class="grid-item">
-            <span class="count" slot="text">{{userInfo.art_count}}</span>
-            <span class="text" slot="text">头条</span>
+            <span
+              class="count"
+              slot="text"
+            >{{userInfo.art_count}}</span>
+            <span
+              class="text"
+              slot="text"
+            >头条</span>
           </van-grid-item>
           <van-grid-item class="grid-item">
-            <span class="count" slot="text">{{userInfo.follow_count}}</span>
-            <span class="text" slot="text">关注</span>
+            <span
+              class="count"
+              slot="text"
+            >{{userInfo.follow_count}}</span>
+            <span
+              class="text"
+              slot="text"
+            >关注</span>
           </van-grid-item>
           <van-grid-item class="grid-item">
-            <span class="count" slot="text">{{userInfo.fans_count}}</span>
-            <span class="text" slot="text">粉丝</span>
+            <span
+              class="count"
+              slot="text"
+            >{{userInfo.fans_count}}</span>
+            <span
+              class="text"
+              slot="text"
+            >粉丝</span>
           </van-grid-item>
           <van-grid-item class="grid-item">
-            <span class="count" slot="text">{{userInfo.like_count}}</span>
-            <span class="text" slot="text">获赞</span>
+            <span
+              class="count"
+              slot="text"
+            >{{userInfo.like_count}}</span>
+            <span
+              class="text"
+              slot="text"
+            >获赞</span>
           </van-grid-item>
         </van-grid>
       </div>
     </div>
-    <van-grid class="grid-nav" :column-num="2" clickable>
+    <van-grid
+      class="grid-nav"
+      :column-num="2"
+      clickable
+    >
       <van-grid-item class="grid-item">
-        <i slot="icon" class="toutiao toutiao-shoucang"></i>
-        <span slot="text" class="text">收藏</span>
+        <i
+          slot="icon"
+          class="toutiao toutiao-shoucang"
+        ></i>
+        <span
+          slot="text"
+          class="text"
+        >收藏</span>
       </van-grid-item>
       <van-grid-item class="grid-item">
-        <i slot="icon" class="toutiao toutiao-lishi"></i>
-        <span slot="text" class="text">历史</span>
+        <i
+          slot="icon"
+          class="toutiao toutiao-lishi"
+        ></i>
+        <span
+          slot="text"
+          class="text"
+        >历史</span>
       </van-grid-item>
     </van-grid>
     <!-- /宫格导航 -->
 
-    <van-cell title="消息通知" is-link />
-    <van-cell class="mb-9" title="小智同学" is-link />
-    <van-cell v-if="user" class="logout-cell" clickable title="退出登录" @click="onLogout" />
+    <van-cell
+      title="消息通知"
+      is-link
+    />
+    <van-cell
+      class="mb-9"
+      title="小智同学"
+      is-link
+    />
+    <van-cell
+      v-if="user"
+      class="logout-cell"
+      clickable
+      title="退出登录"
+      @click="onLogout"
+    />
   </div>
 </template>
 
@@ -59,27 +135,27 @@
 import { mapState } from 'vuex'
 import { getUserInfo } from '@/api/user'
 export default {
-  data() {
+  data () {
     return {
-      userInfo: {},
+      userInfo: {}
     }
   },
-  created() {
+  created () {
     if (this.user) {
       this.loadUserInfo()
     }
   },
   name: 'MyIndex',
   computed: {
-    ...mapState(['user']),
+    ...mapState(['user'])
   },
   methods: {
-    onLogout() {
+    onLogout () {
       // 退出提示
       // 在组件中需要使用 this.$dialog 来调用弹框组件
       this.$dialog
         .confirm({
-          title: '确认退出吗？',
+          title: '确认退出吗？'
         })
         .then(() => {
           // on confirm
@@ -92,15 +168,15 @@ export default {
         })
     },
 
-    async loadUserInfo() {
+    async loadUserInfo () {
       try {
         const { data } = await getUserInfo()
         this.userInfo = data.data
       } catch (err) {
         this.$toast('您登录时间过长，请重新登录！')
       }
-    },
-  },
+    }
+  }
 }
 </script>
 

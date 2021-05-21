@@ -1,6 +1,9 @@
 <template>
   <div class="home-container">
-    <van-nav-bar class="page-nav-bar" fixed>
+    <van-nav-bar
+      class="page-nav-bar"
+      fixed
+    >
       <van-button
         class="search-btn"
         slot="title"
@@ -13,14 +16,35 @@
     </van-nav-bar>
     <!-- 导航栏 -->
     <!-- 列表 -->
-    <van-tabs class="channel-tabs" v-model="active" animated swipeable>
-      <van-tab :title="channel.name" v-for="channel in channels" :key="channel.id">
+    <van-tabs
+      class="channel-tabs"
+      v-model="active"
+      animated
+      swipeable
+    >
+      <van-tab
+        :title="channel.name"
+        v-for="channel in channels"
+        :key="channel.id"
+      >
         <!-- 文章列表 -->
-        <article-list ref="article-list" :channel="channel" />
+        <article-list
+          ref="article-list"
+          :channel="channel"
+        />
       </van-tab>
-      <div slot="nav-right" class="placeholder"></div>
-      <div slot="nav-right" class="hamburger-btn">
-        <i class="toutiao toutiao-gengduo" @click="isChennelEditShow=true "></i>
+      <div
+        slot="nav-right"
+        class="placeholder"
+      ></div>
+      <div
+        slot="nav-right"
+        class="hamburger-btn"
+      >
+        <i
+          class="toutiao toutiao-gengduo"
+          @click="isChennelEditShow=true "
+        ></i>
       </div>
     </van-tabs>
     <!-- 频道编辑弹出层 -->
@@ -31,7 +55,11 @@
       position="right"
       :style="{ width:'90%', height: '100%' }"
     >
-      <channel-edit :my-channels="channels" :active="active" @update-active="onUpdateActive"></channel-edit>
+      <channel-edit
+        :my-channels="channels"
+        :active="active"
+        @update-active="onUpdateActive"
+      ></channel-edit>
     </van-popup>
   </div>
 </template>
@@ -44,25 +72,25 @@ import { mapState } from 'vuex'
 import { getItem } from '@/utils/storage'
 export default {
   name: 'HomeIndex',
-  data() {
+  data () {
     return {
       active: 0,
-      channels: [], //频道列表
-      isChennelEditShow: false, //弹出层的显示状态
+      channels: [], // 频道列表
+      isChennelEditShow: false // 弹出层的显示状态
     }
   },
   components: {
     ArticleList,
-    ChannelEdit,
+    ChannelEdit
   },
   computed: {
-    ...mapState(['user']),
+    ...mapState(['user'])
   },
-  created() {
+  created () {
     this.loadChannels()
   },
   methods: {
-    async loadChannels() {
+    async loadChannels () {
       try {
         let channels = []
         if (this.user) {
@@ -82,11 +110,11 @@ export default {
         this.$toast('获取频道列表数据失败')
       }
     },
-    onUpdateActive(index, isChennelEditShow = true) {
+    onUpdateActive (index, isChennelEditShow = true) {
       this.active = index
       this.isChennelEditShow = isChennelEditShow
-    },
-  },
+    }
+  }
 }
 </script>
 

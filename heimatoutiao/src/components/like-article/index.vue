@@ -15,32 +15,32 @@ export default {
   props: {
     value: {
       type: [Number],
-      required: true,
+      required: true
     },
     articleId: {
       type: [Number, String, Object],
-      required: true,
-    },
+      required: true
+    }
   },
-  data() {
+  data () {
     return {
-      loading: false,
+      loading: false
     }
   },
   watch: {},
   computed: {},
-  created() {},
-  mounted() {},
+  created () { },
+  mounted () { },
   methods: {
-    async onCollect() {
+    async onCollect () {
       this.loading = true
       try {
         let status = -1
         if (this.value === 1) {
-          //已点赞，则取消点赞
+          // 已点赞，则取消点赞
           await deleteLike(this.articleId)
         } else {
-          //未点赞，则添加点赞
+          // 未点赞，则添加点赞
           await addLike(this.articleId)
           status = 1
         }
@@ -50,8 +50,8 @@ export default {
         this.$toast('操作失败，请重试！')
       }
       this.loading = false
-    },
-  },
+    }
+  }
 }
 </script>
 <style lang="less" scoped>

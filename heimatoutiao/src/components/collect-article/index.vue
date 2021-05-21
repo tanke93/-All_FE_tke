@@ -15,34 +15,34 @@ export default {
   props: {
     value: {
       type: Boolean,
-      required: true,
+      required: true
     },
     articleId: {
       type: [Number, String, Object],
-      required: true,
-    },
+      required: true
+    }
   },
-  data() {
+  data () {
     return {
-      loading: false,
+      loading: false
     }
   },
   watch: {},
   computed: {},
-  created() {},
-  mounted() {},
+  created () { },
+  mounted () { },
   methods: {
-    async onCollect() {
+    async onCollect () {
       this.loading = true
       try {
-        //已收藏，就取消收藏
+        // 已收藏，就取消收藏
         if (this.value) {
           await deleteCollect(this.articleId)
         } else {
-          //反之，就添加收藏
+          // 反之，就添加收藏
           await addCollect(this.articleId)
         }
-        //传给父组件，更新试图
+        // 传给父组件，更新试图
         this.$emit('input', !this.value)
 
         this.$toast.success(!this.value ? '收藏成功' : '取消收藏')
@@ -50,8 +50,8 @@ export default {
         this.$toast('操作失败，请重试！')
       }
       this.loading = false
-    },
-  },
+    }
+  }
 }
 </script>
 <style lang="less" scoped>

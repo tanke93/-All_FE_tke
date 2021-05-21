@@ -1,22 +1,36 @@
 <template>
   <van-cell class="comment-item">
-    <van-image slot="icon" class="avatar" round fit="cover" :src="comment.aut_photo" />
-    <div slot="title" class="title-wrap">
-      <div class="user-name">{{comment.aut_name}}</div>
+    <van-image
+      slot="icon"
+      class="avatar"
+      round
+      fit="cover"
+      :src="comment.aut_photo"
+    />
+    <div
+      slot="title"
+      class="title-wrap"
+    >
+      <div class="user-name">{{ comment.aut_name }}</div>
       <van-button
         class="like-btn"
-        :class="{liked:comment.is_liking}"
-        :icon="comment.is_liking?'good-job':'good-job-o'"
+        :class="{ liked: comment.is_liking }"
+        :icon="comment.is_liking ? 'good-job' : 'good-job-o'"
         :loading="commentLoading"
         @click="onCommentLike"
-      >{{comment.like_count || '赞'}}</van-button>
+      >{{ comment.like_count || "赞" }}</van-button>
     </div>
 
     <div slot="label">
-      <p class="comment-content">{{comment.content}}</p>
+      <p class="comment-content">{{ comment.content }}</p>
       <div class="bottom-info">
-        <span class="comment-pubdate">{{comment.pubdate | relativeTime}}</span>
-        <van-button class="reply-btn" round>回复 {{comment.reply_count}}</van-button>
+        <span class="comment-pubdate">{{
+          comment.pubdate | relativeTime
+        }}</span>
+        <van-button
+          class="reply-btn"
+          round
+        >回复 {{ comment.reply_count }}</van-button>
       </div>
     </div>
   </van-cell>
@@ -30,20 +44,20 @@ export default {
   props: {
     comment: {
       type: Object,
-      required: true,
-    },
+      required: true
+    }
   },
-  data() {
+  data () {
     return {
-      commentLoading: false,
+      commentLoading: false
     }
   },
   computed: {},
   watch: {},
-  created() {},
-  mounted() {},
+  created () { },
+  mounted () { },
   methods: {
-    async onCommentLike() {
+    async onCommentLike () {
       this.commentLoading = true
       try {
         if (this.comment.is_liking) {
@@ -60,8 +74,8 @@ export default {
         this.$toast('操作失败，请稍后重试！')
       }
       this.commentLoading = false
-    },
-  },
+    }
+  }
 }
 </script>
 

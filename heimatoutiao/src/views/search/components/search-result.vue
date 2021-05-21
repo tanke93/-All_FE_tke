@@ -8,7 +8,11 @@
       error-text="加载失败，请点击重试"
       @load="onLoad"
     >
-      <van-cell v-for="(article,index) in list" :key="index" :title="article.title" />
+      <van-cell
+        v-for="(article,index) in list"
+        :key="index"
+        :title="article.title"
+      />
     </van-list>
   </div>
 </template>
@@ -21,30 +25,30 @@ export default {
   props: {
     searchText: {
       type: String,
-      required: true,
-    },
+      required: true
+    }
   },
-  data() {
+  data () {
     return {
       list: [],
       loading: false,
       finished: false,
       page: 1,
       perPage: 20,
-      error: false,
+      error: false
     }
   },
   watch: {},
   computed: {},
-  created() {},
-  mounted() {},
+  created () { },
+  mounted () { },
   methods: {
-    async onLoad() {
+    async onLoad () {
       try {
         const { data } = await getSearchResult({
-          page: this.page, //页码
-          per_page: this.perPage, //每页数据条数
-          q: this.searchText, //查询关键字
+          page: this.page, // 页码
+          per_page: this.perPage, // 每页数据条数
+          q: this.searchText // 查询关键字
         })
 
         // if (Math.random() > 0.5) {
@@ -63,8 +67,8 @@ export default {
         this.error = true
         this.loading = false
       }
-    },
-  },
+    }
+  }
 }
 </script>
 <style lang="less" scoped>

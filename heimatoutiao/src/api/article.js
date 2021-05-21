@@ -8,7 +8,7 @@ export const getArticles = params => {
     params
   })
 }
-//获取文章
+// 获取文章
 export const getArticleById = articleId => {
   return request({
     method: 'GET',
@@ -16,7 +16,7 @@ export const getArticleById = articleId => {
   })
 }
 
-//收藏文章
+// 收藏文章
 export const addCollect = target => {
   return request({
     method: 'POST',
@@ -26,14 +26,14 @@ export const addCollect = target => {
     }
   })
 }
-//取消收藏文章
+// 取消收藏文章
 export const deleteCollect = target => {
   return request({
     method: 'DELETE',
     url: `/v1_0/article/collections/${target}`
   })
 }
-//对文章点赞
+// 对文章点赞
 export const addLike = target => {
   return request({
     method: 'POST',
@@ -43,7 +43,7 @@ export const addLike = target => {
     }
   })
 }
-//取消点赞文章
+// 取消点赞文章
 export const deleteLike = target => {
   return request({
     method: 'DELETE',

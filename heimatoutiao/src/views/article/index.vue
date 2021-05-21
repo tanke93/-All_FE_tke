@@ -1,26 +1,60 @@
 <template>
   <div class="article-container">
     <!-- 导航栏 -->
-    <van-nav-bar class="page-nav-bar" left-arrow title="头条" @click-left="$router.back()"></van-nav-bar>
+    <van-nav-bar
+      class="page-nav-bar"
+      left-arrow
+      title="头条"
+      @click-left="$router.back()"
+    ></van-nav-bar>
     <!-- /导航栏 -->
     <div class="main-wrap">
       <!-- 加载中 -->
-      <div v-if="loading" class="loading-wrap">
-        <van-loading color="#3296fa" vertical>加载中</van-loading>
+      <div
+        v-if="loading"
+        class="loading-wrap"
+      >
+        <van-loading
+          color="#3296fa"
+          vertical
+        >加载中</van-loading>
       </div>
       <!-- /加载中 -->
 
       <!-- 加载完成-文章详情 -->
-      <div v-else-if="article.title" class="article-detail">
+      <div
+        v-else-if="article.title"
+        class="article-detail"
+      >
         <!-- 文章标题 -->
         <h1 class="article-title">{{ article.title }}</h1>
         <!-- /文章标题 -->
 
         <!-- 用户信息 -->
-        <van-cell class="user-info" center :border="false">
-          <van-image class="avatar" slot="icon" round fit="cover" :src="article.aut_photo" />
-          <div slot="title" class="user-name">{{article.aut_name}}</div>
-          <div slot="label" class="publish-date">{{article.pubdate | relativeTime}}</div>
+        <van-cell
+          class="user-info"
+          center
+          :border="false"
+        >
+          <van-image
+            class="avatar"
+            slot="icon"
+            round
+            fit="cover"
+            :src="article.aut_photo"
+          />
+          <div
+            slot="title"
+            class="user-name"
+          >
+            {{ article.aut_name }}
+          </div>
+          <div
+            slot="label"
+            class="publish-date"
+          >
+            {{ article.pubdate | relativeTime }}
+          </div>
 
           <!--
             $event 是事件参数
@@ -36,8 +70,12 @@
             一个组件上只能使用一次v-model
             如果有多个数据需要实现类似于v-model的效果，何解？
             可以使用属性的.sync修饰符
-          -->
-          <follow-user class="follow-btn" :user-id="article.aut_id" v-model="article.is_followed" />
+            -->
+          <follow-user
+            class="follow-btn"
+            :user-id="article.aut_id"
+            v-model="article.is_followed"
+          />
           <!-- <van-button v-if="article.is_followed" class="follow-btn" round size="small" :loading="followLoading"
             @click="onFollow">已关注
           </van-button>
@@ -47,7 +85,11 @@
         <!-- /用户信息 -->
 
         <!-- 文章内容 -->
-        <div class="article-content markdown-body" v-html="article.content" ref="article-content"></div>
+        <div
+          class="article-content markdown-body"
+          v-html="article.content"
+          ref="article-content"
+        ></div>
         <van-divider>正文结束</van-divider>
         <!-- 文章评论区域 -->
         <CommentList
@@ -57,34 +99,59 @@
 
         <!-- 底部区域 -->
         <div class="article-bottom">
-          <van-button class="comment-btn" type="default" round size="small">写评论</van-button>
-          <van-icon name="comment-o" :info="totalCommentCount" color="#777" />
+          <van-button
+            class="comment-btn"
+            type="default"
+            round
+            size="small"
+          >写评论</van-button>
+          <van-icon
+            name="comment-o"
+            :info="totalCommentCount"
+            color="#777"
+          />
           <ColloectArticle
             v-model="article.is_collected"
             class="btn-item"
             :article-id="article.art_id"
           />
           <!-- <van-icon color="#777" name="star-o" /> -->
-          <LikeArticle class="btn-item" v-model="article.attitude" :article-id="article.art_id" />
+          <LikeArticle
+            class="btn-item"
+            v-model="article.attitude"
+            :article-id="article.art_id"
+          />
           <!-- <van-icon color="#777" name="good-job-o" /> -->
-          <van-icon name="share" color="#777777"></van-icon>
+          <van-icon
+            name="share"
+            color="#777777"
+          ></van-icon>
         </div>
         <!-- /底部区域 -->
       </div>
       <!-- /加载完成-文章详情 -->
 
       <!-- 加载失败：404 -->
-      <div v-else-if="errStatus === 404" class="error-wrap">
+      <div
+        v-else-if="errStatus === 404"
+        class="error-wrap"
+      >
         <van-icon name="failure" />
         <p class="text">该资源不存在或已删除！</p>
       </div>
       <!-- /加载失败：404 -->
 
       <!-- 加载失败：其它未知错误（例如网络原因或服务端异常） -->
-      <div v-else class="error-wrap">
+      <div
+        v-else
+        class="error-wrap"
+      >
         <van-icon name="failure" />
         <p class="text">内容加载失败！</p>
-        <van-button class="retry-btn" @click="loadArticle">点击重试</van-button>
+        <van-button
+          class="retry-btn"
+          @click="loadArticle"
+        >点击重试</van-button>
       </div>
       <!-- /加载失败：其它未知错误（例如网络原因或服务端异常） -->
     </div>
@@ -104,31 +171,31 @@ export default {
     FollowUser,
     ColloectArticle,
     LikeArticle,
-    CommentList,
+    CommentList
   },
   props: {
     articleId: {
       type: [Number, String, Object],
-      required: true,
-    },
+      required: true
+    }
   },
-  data() {
+  data () {
     return {
-      article: {}, //文章详情对象
+      article: {}, // 文章详情对象
       loading: true,
       errStatus: 0,
       followLoading: false,
-      totalCommentCount: 0,
+      totalCommentCount: 0
     }
   },
   computed: {},
   watch: {},
-  created() {
+  created () {
     this.loadArticle()
   },
-  mounted() {},
+  mounted () { },
   methods: {
-    async loadArticle() {
+    async loadArticle () {
       this.loading = true
       try {
         const { data } = await getArticleById(this.articleId)
@@ -147,7 +214,7 @@ export default {
       }
       this.loading = false
     },
-    previewImage() {
+    previewImage () {
       const articleContent = this.$refs['article-content']
       const imgs = articleContent.querySelectorAll('img')
       const images = []
@@ -157,12 +224,12 @@ export default {
         img.onclick = () => {
           ImagePreview({
             images,
-            startPosition: index,
+            startPosition: index
           })
         }
       })
-    },
-  },
+    }
+  }
 }
 </script>
 

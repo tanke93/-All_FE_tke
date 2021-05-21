@@ -1,6 +1,15 @@
 <template>
-  <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-    <comment-item v-for="(item,index) in list" :key="index" :comment="item" />
+  <van-list
+    v-model="loading"
+    :finished="finished"
+    finished-text="没有更多了"
+    @load="onLoad"
+  >
+    <comment-item
+      v-for="(item, index) in list"
+      :key="index"
+      :comment="item"
+    />
   </van-list>
 </template>
 
@@ -10,38 +19,38 @@ import CommentItem from './comment-item'
 export default {
   name: 'CommentList',
   components: {
-    CommentItem,
+    CommentItem
   },
   props: {
     source: {
       type: [Number, String, Object],
-      required: true,
-    },
+      required: true
+    }
   },
-  data() {
+  data () {
     return {
       list: [],
       loading: false,
       finished: false,
-      offset: null, //下一页数据的标记
-      limit: 10,
+      offset: null, // 下一页数据的标记
+      limit: 10
     }
   },
   watch: {},
   computed: {},
-  created() {
+  created () {
     this.onLoad()
   },
-  mounted() {},
+  mounted () { },
   methods: {
     // 1、请求获取数据
-    async onLoad() {
+    async onLoad () {
       try {
         const { data } = await getComments({
-          type: 'a', //  评论类型，a-对文章(article)的评论，c-对评论(comment)的回复
+          type: 'a', // 评论类型，a-对文章(article)的评论，c-对评论(comment)的回复
           source: this.source,
           offset: this.offset,
-          limit: this.limit,
+          limit: this.limit
         })
         // 2、将数据添加到列表中
         const { results } = data.data
@@ -61,8 +70,8 @@ export default {
       } catch (error) {
         this.$toast('数据获取失败，请稍后重试！')
       }
-    },
-  },
+    }
+  }
 }
 </script>
 <style lang="less" scoped>

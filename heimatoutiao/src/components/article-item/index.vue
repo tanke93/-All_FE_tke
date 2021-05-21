@@ -12,11 +12,25 @@
     }
   }"
   >
-    <div slot="title" class="title van-multi-ellipsis--l2">{{article.title}}</div>
+    <div
+      slot="title"
+      class="title van-multi-ellipsis--l2"
+    >{{article.title}}</div>
     <div slot="label">
-      <div v-if="article.cover.type===3" class="cover-wrap">
-        <div class="cover-item" v-for="(img,index) in article.cover.images" :key="index">
-          <van-image class="cover-item-img" :src="img" fit="cover"></van-image>
+      <div
+        v-if="article.cover.type===3"
+        class="cover-wrap"
+      >
+        <div
+          class="cover-item"
+          v-for="(img,index) in article.cover.images"
+          :key="index"
+        >
+          <van-image
+            class="cover-item-img"
+            :src="img"
+            fit="cover"
+          ></van-image>
         </div>
       </div>
       <div class="label-info-wrap">
@@ -42,12 +56,12 @@ export default {
   props: {
     article: {
       type: Object,
-      required: true,
-    },
+      required: true
+    }
   },
-  data() {
+  data () {
     return {}
-  },
+  }
 }
 </script>
 
