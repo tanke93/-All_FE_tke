@@ -1,34 +1,38 @@
 <template>
-  <van-button :icon="value ===1 ? 'good-job':'good-job-o'" :class="{liked :value === 1}" :loading="loading"
-    @click="onCollect" />
+  <van-button
+    :icon="value ===1 ? 'good-job':'good-job-o'"
+    :class="{liked :value === 1}"
+    :loading="loading"
+    @click="onCollect"
+  />
 </template>
 
 <script>
-import { addLike, deleteLike } from "@/api/article";
+import { addLike, deleteLike } from '@/api/article'
 export default {
-  name: "LikeArticle",
+  name: 'LikeArticle',
   components: {},
   props: {
     value: {
       type: [Number],
-      required: true
+      required: true,
     },
     articleId: {
       type: [Number, String, Object],
-      required: true
-    }
+      required: true,
+    },
   },
-  data () {
+  data() {
     return {
-      loading: false
+      loading: false,
     }
   },
   watch: {},
   computed: {},
-  created () { },
-  mounted () { },
+  created() {},
+  mounted() {},
   methods: {
-    async onCollect () {
+    async onCollect() {
       this.loading = true
       try {
         let status = -1
@@ -46,9 +50,9 @@ export default {
         this.$toast('操作失败，请重试！')
       }
       this.loading = false
-    }
-  }
-};
+    },
+  },
+}
 </script>
 <style lang="less" scoped>
 .liked {

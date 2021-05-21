@@ -1,6 +1,8 @@
 <template>
   <!-- :to="`/article/${article.art_id}`"  -->
-  <van-cell class="article-item" :to="{
+  <van-cell
+    class="article-item"
+    :to="{
     //根据路由名称进行跳转
     name:'article',
     //传递路由动态参数
@@ -8,7 +10,8 @@
       //属性名：路由路径中设置的动态参数名称
       articleId:article.art_id
     }
-  }">
+  }"
+  >
     <div slot="title" class="title van-multi-ellipsis--l2">{{article.title}}</div>
     <div slot="label">
       <div v-if="article.cover.type===3" class="cover-wrap">
@@ -22,9 +25,13 @@
         <span>{{article.pubdate | relativeTime}}</span>
       </div>
     </div>
-    <van-image class="right-cover" v-if="article.cover.type===1" fit="cover" slot="default"
-      :src="article.cover.images[0]">
-    </van-image>
+    <van-image
+      class="right-cover"
+      v-if="article.cover.type===1"
+      fit="cover"
+      slot="default"
+      :src="article.cover.images[0]"
+    ></van-image>
   </van-cell>
 </template>
 
@@ -35,12 +42,12 @@ export default {
   props: {
     article: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
-  data () {
+  data() {
     return {}
-  }
+  },
 }
 </script>
 

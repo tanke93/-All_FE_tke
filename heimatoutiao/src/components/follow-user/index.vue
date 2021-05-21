@@ -1,40 +1,56 @@
 <template>
-  <van-button v-if="isFollowed" class="follow-btn" round size="small" :loading="loading" @click="onFollow">已关注
-  </van-button>
-  <van-button v-else class="follow-btn" type="info" color="#3296fa" round size="small" icon="plus" :loading="loading"
-    @click="onFollow">关注</van-button>
+  <van-button
+    v-if="isFollowed"
+    class="follow-btn"
+    round
+    size="small"
+    :loading="loading"
+    @click="onFollow"
+  >已关注</van-button>
+  <van-button
+    v-else
+    class="follow-btn"
+    type="info"
+    color="#3296fa"
+    round
+    size="small"
+    icon="plus"
+    :loading="loading"
+    @click="onFollow"
+  >关注</van-button>
 </template>
 
 <script>
 import { addFollow, deleteFollow } from '@/api/user'
 export default {
-  name: "FollowUser",
+  name: 'FollowUser',
   components: {},
-  model: {//自定义v-model的名称
-    prop: 'isFollowed',//默认是value
-    event: 'update-is_followed'//默认是input
+  model: {
+    //自定义v-model的名称
+    prop: 'isFollowed', //默认是value
+    event: 'update-is_followed', //默认是input
   },
   props: {
     isFollowed: {
       type: Boolean,
-      required: true
+      required: true,
     },
     userId: {
       type: [Number, String, Object],
-      required: true
-    }
+      required: true,
+    },
   },
-  data () {
+  data() {
     return {
-      loading: false
+      loading: false,
     }
   },
   watch: {},
   computed: {},
-  created () { },
-  mounted () { },
+  created() {},
+  mounted() {},
   methods: {
-    async onFollow () {
+    async onFollow() {
       this.loading = true
       try {
         if (this.isFollowed) {
@@ -59,9 +75,9 @@ export default {
         }
       }
       this.loading = false
-    }
-  }
-};
+    },
+  },
+}
 </script>
 <style lang="less" scoped>
 </style>

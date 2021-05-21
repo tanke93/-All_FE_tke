@@ -1,7 +1,12 @@
 <template>
   <div class="search-suggestion">
-    <van-cell :title="text" icon="search" v-for="(text,index) in suggestions" :key="index"
-      @click="$emit('search', text)">
+    <van-cell
+      :title="text"
+      icon="search"
+      v-for="(text,index) in suggestions"
+      :key="index"
+      @click="$emit('search', text)"
+    >
       <div slot="title" v-html="highlight(text)"></div>
     </van-cell>
   </div>
@@ -9,19 +14,19 @@
 
 <script>
 import { getSearchSuggestions } from '@/api/search'
-import { debounce } from 'lodash';
+import { debounce } from 'lodash'
 export default {
-  name: "SearchSuggestion",
+  name: 'SearchSuggestion',
   components: {},
   props: {
     searchText: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
-  data () {
+  data() {
     return {
-      suggestions: []//联想建议数据列表
+      suggestions: [], //联想建议数据列表
     }
   },
   watch: {
@@ -29,16 +34,14 @@ export default {
       handler: debounce(function (value) {
         this.loadgetSearchSuggestions(value)
       }, 200),
-      immediate: true
-    }
+      immediate: true,
+    },
   },
   computed: {},
-  created () {
-
-  },
-  mounted () { },
+  created() {},
+  mounted() {},
   methods: {
-    async loadgetSearchSuggestions (q) {
+    async loadgetSearchSuggestions(q) {
       try {
         const { data } = await getSearchSuggestions(q)
         this.suggestions = data.data.options
@@ -46,14 +49,14 @@ export default {
         this.$toast('数据获取失败，请稍后重试')
       }
     },
-    highlight (text) {
+    highlight(text) {
       const highlightStr = `<span class='active'>${this.searchText}</span>`
       // RegExp 正则表达式构造函数
       const reg = new RegExp(this.searchText, 'gi')
       return text.replace(reg, highlightStr)
-    }
-  }
-};
+    },
+  },
+}
 </script>
 <style lang="less" scoped>
 .search-suggestion {

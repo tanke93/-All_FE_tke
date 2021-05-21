@@ -8,43 +8,46 @@
       </div>
       <van-icon v-else name="delete" @click="isDeleteShow = true" />
     </van-cell>
-    <van-cell :title="item" v-for="(item, index) in searchHistories" :key="index"
-      @click="onSearchItemClick(item, index)">
+    <van-cell
+      :title="item"
+      v-for="(item, index) in searchHistories"
+      :key="index"
+      @click="onSearchItemClick(item, index)"
+    >
       <van-icon name="close" v-show="isDeleteShow" />
     </van-cell>
-
   </div>
 </template>
 
 <script>
 export default {
-  name: "SearchHistory",
+  name: 'SearchHistory',
   components: {},
   props: {
     searchHistories: {
       type: Array,
-      required: true
-    }
+      required: true,
+    },
   },
-  data () {
+  data() {
     return {
-      isDeleteShow: false
+      isDeleteShow: false,
     }
   },
   watch: {},
   computed: {},
-  created () { },
-  mounted () { },
+  created() {},
+  mounted() {},
   methods: {
-    onSearchItemClick (item, index) {
+    onSearchItemClick(item, index) {
       if (this.isDeleteShow) {
         this.searchHistories.splice(index, 1)
       } else {
         this.$emit('search', item)
       }
-    }
-  }
-};
+    },
+  },
+}
 </script>
 <style lang="less" scoped>
 </style>

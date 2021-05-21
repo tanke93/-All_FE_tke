@@ -27,11 +27,9 @@
 <script>
 export default {
   name: 'LayoutIndex',
-  data () {
-    return {
-
-    };
-  }
+  data() {
+    return {}
+  },
 }
 </script>
 

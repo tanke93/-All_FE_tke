@@ -42,8 +42,7 @@
             @click="onFollow">已关注
           </van-button>
           <van-button v-else class="follow-btn" type="info" color="#3296fa" round size="small" icon="plus"
-            :loading="followLoading" @click="onFollow">关注</van-button> -->
-
+          :loading="followLoading" @click="onFollow">关注</van-button>-->
         </van-cell>
         <!-- /用户信息 -->
 
@@ -51,13 +50,20 @@
         <div class="article-content markdown-body" v-html="article.content" ref="article-content"></div>
         <van-divider>正文结束</van-divider>
         <!-- 文章评论区域 -->
-        <CommentList :source="article.art_id" @onload-success="totalCommentCount = $event.total_count" />
+        <CommentList
+          :source="article.art_id"
+          @onload-success="totalCommentCount = $event.total_count"
+        />
 
         <!-- 底部区域 -->
         <div class="article-bottom">
           <van-button class="comment-btn" type="default" round size="small">写评论</van-button>
           <van-icon name="comment-o" :info="totalCommentCount" color="#777" />
-          <ColloectArticle v-model="article.is_collected" class="btn-item" :article-id="article.art_id" />
+          <ColloectArticle
+            v-model="article.is_collected"
+            class="btn-item"
+            :article-id="article.art_id"
+          />
           <!-- <van-icon color="#777" name="star-o" /> -->
           <LikeArticle class="btn-item" v-model="article.attitude" :article-id="article.art_id" />
           <!-- <van-icon color="#777" name="good-job-o" /> -->
@@ -86,43 +92,43 @@
 </template>
 
 <script>
-import { getArticleById } from "@/api/article";
+import { getArticleById } from '@/api/article'
 import { ImagePreview } from 'vant'
 import FollowUser from '@/components/follow-user'
 import ColloectArticle from '@/components/collect-article'
 import LikeArticle from '@/components/like-article'
-import CommentList from "./components/comment-list";
+import CommentList from './components/comment-list'
 export default {
   name: 'ArticleIndex',
   components: {
     FollowUser,
     ColloectArticle,
     LikeArticle,
-    CommentList
+    CommentList,
   },
   props: {
     articleId: {
       type: [Number, String, Object],
-      required: true
-    }
+      required: true,
+    },
   },
-  data () {
+  data() {
     return {
-      article: {},//文章详情对象
+      article: {}, //文章详情对象
       loading: true,
       errStatus: 0,
       followLoading: false,
-      totalCommentCount: 0
+      totalCommentCount: 0,
     }
   },
   computed: {},
   watch: {},
-  created () {
+  created() {
     this.loadArticle()
   },
-  mounted () { },
+  mounted() {},
   methods: {
-    async loadArticle () {
+    async loadArticle() {
       this.loading = true
       try {
         const { data } = await getArticleById(this.articleId)
@@ -132,7 +138,7 @@ export default {
           this.previewImage()
         }, 0)
 
-        console.log(data);
+        console.log(data)
       } catch (error) {
         if (error.response && error.response.status === 404) {
           this.errStatus = 404
@@ -141,7 +147,7 @@ export default {
       }
       this.loading = false
     },
-    previewImage () {
+    previewImage() {
       const articleContent = this.$refs['article-content']
       const imgs = articleContent.querySelectorAll('img')
       const images = []
@@ -151,18 +157,17 @@ export default {
         img.onclick = () => {
           ImagePreview({
             images,
-            startPosition: index
+            startPosition: index,
           })
         }
-      });
+      })
     },
-
-  }
+  },
 }
 </script>
 
 <style scoped lang="less">
-@import "./github-markdown.css";
+@import './github-markdown.css';
 .article-container {
   .main-wrap {
     position: fixed;

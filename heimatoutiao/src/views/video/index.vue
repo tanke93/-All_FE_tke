@@ -4,7 +4,7 @@
 
 <script>
 export default {
-  name: 'VideoIndex'
+  name: 'VideoIndex',
 }
 </script>
 

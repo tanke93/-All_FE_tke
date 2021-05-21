@@ -1,8 +1,15 @@
 <template>
   <div class="home-container">
     <van-nav-bar class="page-nav-bar" fixed>
-      <van-button class="search-btn" slot="title" type="info" size="small" round icon="search" to="/search">搜索
-      </van-button>
+      <van-button
+        class="search-btn"
+        slot="title"
+        type="info"
+        size="small"
+        round
+        icon="search"
+        to="/search"
+      >搜索</van-button>
     </van-nav-bar>
     <!-- 导航栏 -->
     <!-- 列表 -->
@@ -17,40 +24,45 @@
       </div>
     </van-tabs>
     <!-- 频道编辑弹出层 -->
-    <van-popup v-model="isChennelEditShow" closeable close-icon-position="top-left" position="right"
-      :style="{ width:'90%', height: '100%' }">
+    <van-popup
+      v-model="isChennelEditShow"
+      closeable
+      close-icon-position="top-left"
+      position="right"
+      :style="{ width:'90%', height: '100%' }"
+    >
       <channel-edit :my-channels="channels" :active="active" @update-active="onUpdateActive"></channel-edit>
     </van-popup>
   </div>
 </template>
 
 <script>
-import { getUserChannels } from '@/api/user';
-import ArticleList from './components/article-list';
-import ChannelEdit from './components/channel-edit';
-import { mapState } from 'vuex';
-import { getItem } from '@/utils/storage';
+import { getUserChannels } from '@/api/user'
+import ArticleList from './components/article-list'
+import ChannelEdit from './components/channel-edit'
+import { mapState } from 'vuex'
+import { getItem } from '@/utils/storage'
 export default {
   name: 'HomeIndex',
-  data () {
+  data() {
     return {
       active: 0,
-      channels: [],//频道列表
-      isChennelEditShow: false//弹出层的显示状态
+      channels: [], //频道列表
+      isChennelEditShow: false, //弹出层的显示状态
     }
   },
   components: {
     ArticleList,
-    ChannelEdit
+    ChannelEdit,
   },
   computed: {
-    ...mapState(['user'])
+    ...mapState(['user']),
   },
-  created () {
+  created() {
     this.loadChannels()
   },
   methods: {
-    async loadChannels () {
+    async loadChannels() {
       try {
         let channels = []
         if (this.user) {
@@ -70,11 +82,11 @@ export default {
         this.$toast('获取频道列表数据失败')
       }
     },
-    onUpdateActive (index, isChennelEditShow = true) {
+    onUpdateActive(index, isChennelEditShow = true) {
       this.active = index
       this.isChennelEditShow = isChennelEditShow
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -135,12 +147,12 @@ export default {
         font-size: 33px;
       }
       &:before {
-        content: "";
+        content: '';
         position: absolute;
         left: 0;
         width: 1px;
         height: 100%;
-        background-image: url("~@/assets/gradient-gray-line.png");
+        background-image: url('~@/assets/gradient-gray-line.png');
         background-size: contain;
       }
     }
