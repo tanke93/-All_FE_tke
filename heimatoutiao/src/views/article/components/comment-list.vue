@@ -3,12 +3,16 @@
     v-model="loading"
     :finished="finished"
     finished-text="没有更多了"
+    :error="error"
+    error-text="加载失败，请点击重试"
+    :immediate-check="false"
     @load="onLoad"
   >
     <comment-item
       v-for="(item, index) in list"
       :key="index"
       :comment="item"
+      @reply-click="$emit('reply-click',$event)"
     />
   </van-list>
 </template>
@@ -25,20 +29,34 @@ export default {
     source: {
       type: [Number, String, Object],
       required: true
+    },
+    list: {
+      type: Array,
+      default: () => []
+    },
+    type: {
+      type: String,
+      // 自定义Prop数据校验
+      validator (value) {
+        return ['a', 'c'].includes(value)
+      },
+      default: 'a'
     }
   },
   data () {
     return {
-      list: [],
+      // list: [],
       loading: false,
       finished: false,
       offset: null, // 下一页数据的标记
-      limit: 10
+      limit: 10,
+      error: false
     }
   },
   watch: {},
   computed: {},
   created () {
+    this.loading = true
     this.onLoad()
   },
   mounted () { },
@@ -47,8 +65,8 @@ export default {
     async onLoad () {
       try {
         const { data } = await getComments({
-          type: 'a', // 评论类型，a-对文章(article)的评论，c-对评论(comment)的回复
-          source: this.source,
+          type: this.type, // 评论类型，a-对文章(article)的评论，c-对评论(comment)的回复
+          source: this.source.toString(),
           offset: this.offset,
           limit: this.limit
         })
@@ -68,6 +86,8 @@ export default {
           this.finished = true
         }
       } catch (error) {
+        this.error = true
+        this.loading = false
         this.$toast('数据获取失败，请稍后重试！')
       }
     }

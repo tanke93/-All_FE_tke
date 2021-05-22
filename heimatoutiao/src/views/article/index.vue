@@ -95,6 +95,8 @@
         <CommentList
           :source="article.art_id"
           @onload-success="totalCommentCount = $event.total_count"
+          :list="commentList"
+          @reply-click="onReplyClick"
         />
 
         <!-- 底部区域 -->
@@ -104,6 +106,7 @@
             type="default"
             round
             size="small"
+            @click="isPostShow = true"
           >写评论</van-button>
           <van-icon
             name="comment-o"
@@ -128,6 +131,17 @@
           ></van-icon>
         </div>
         <!-- /底部区域 -->
+
+        <!-- 发布评论 -->
+        <van-popup
+          v-model="isPostShow"
+          position="bottom"
+        >
+          <CommentPost
+            :target="article.art_id"
+            @post-success="onPostSuccess"
+          />
+        </van-popup>
       </div>
       <!-- /加载完成-文章详情 -->
 
@@ -155,6 +169,20 @@
       </div>
       <!-- /加载失败：其它未知错误（例如网络原因或服务端异常） -->
     </div>
+    <!-- 评论回复 -->
+    <!-- 炭层渲染是懒渲染，只有在第一次展示的时候才会渲染里面的内容 -->
+    <van-popup
+      v-model="isReplyShow"
+      position="bottom"
+      style="height: 100%"
+    >
+      <!-- v-if条件渲染 条件为true时：重新渲染元素节点 为false不渲染，即销毁当前，再次切换为true时重新渲染 -->
+      <CommentReply
+        v-if="isReplyShow"
+        :comment="currentComment"
+        @close="isReplyShow = false"
+      />
+    </van-popup>
   </div>
 </template>
 
@@ -165,13 +193,23 @@ import FollowUser from '@/components/follow-user'
 import ColloectArticle from '@/components/collect-article'
 import LikeArticle from '@/components/like-article'
 import CommentList from './components/comment-list'
+import CommentPost from './components/comment-post'
+import CommentReply from './components/comment-reply'
 export default {
   name: 'ArticleIndex',
   components: {
     FollowUser,
     ColloectArticle,
     LikeArticle,
-    CommentList
+    CommentList,
+    CommentPost,
+    CommentReply
+  },
+  // 依赖注入
+  provide: function () {
+    return {
+      articleId: this.articleId
+    }
   },
   props: {
     articleId: {
@@ -185,7 +223,11 @@ export default {
       loading: true,
       errStatus: 0,
       followLoading: false,
-      totalCommentCount: 0
+      totalCommentCount: 0,
+      isPostShow: false, // 控制发布评论的显示状态
+      commentList: [], // 评论列表
+      isReplyShow: false,
+      currentComment: {} // 当前点击的评论项
     }
   },
   computed: {},
@@ -228,6 +270,16 @@ export default {
           })
         }
       })
+    },
+    onPostSuccess (data) {
+      this.isPostShow = false
+      this.commentList.unshift(data.new_obj)
+    },
+    onReplyClick (comment) {
+      console.log(comment)
+      this.currentComment = comment
+      // 显示评论回复弹出层
+      this.isReplyShow = true
     }
   }
 }
