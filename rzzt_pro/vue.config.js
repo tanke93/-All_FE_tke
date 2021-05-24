@@ -35,6 +35,13 @@ module.exports = {
     overlay: {
       warnings: false,
       errors: true
+    },
+    // 配置反向代理
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3000/', // 要代理的服务器地址
+        changeOrigin: true // 是否跨域
+      }
     }
   },
   configureWebpack: {
