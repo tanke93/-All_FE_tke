@@ -33,6 +33,7 @@
           <van-button
             size="mini"
             round
+            to="/user/profile"
           >编辑资料</van-button>
         </div>
       </div>
