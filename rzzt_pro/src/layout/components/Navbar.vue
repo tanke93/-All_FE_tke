@@ -19,10 +19,11 @@
       >
         <div class="avatar-wrapper">
           <img
-            src="@/assets/common/bigUserHeader.png"
+            v-imagerror="defultImg"
+            :src="staffPhoto"
             class="user-avatar"
           >
-          <span class="name">管理员</span>
+          <span class="name">{{ name }}</span>
           <i
             class="el-icon-caret-bottom"
             style="color:#fff"
@@ -63,10 +64,16 @@ export default {
   components: {
     Hamburger
   },
+  data () {
+    return {
+      defultImg: require('@/assets/common/head.jpg')
+    }
+  },
   computed: {
     ...mapGetters([
       'sidebar',
-      'avatar'
+      'name',
+      'staffPhoto'
     ])
   },
   methods: {
@@ -75,7 +82,7 @@ export default {
     },
     async logout () {
       await this.$store.dispatch('user/logout')
-      this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+      this.$router.push(`/login`)
     }
   }
 }
