@@ -24,13 +24,16 @@
             :tree-node="data"
             @delDepts="getDepartments"
             @addDepts="addDepts"
+            @editDepts="editDepts"
           />
         </el-tree>
       </el-card>
     </div>
     <AddDept
-      :show-dialog="showDialog"
+      ref="addDept"
+      :show-dialog.sync="showDialog"
       :tree-node="node"
+      @addDepts="getDepartments"
     />
   </div>
 </template>
@@ -62,12 +65,19 @@ export default {
   methods: {
     async getDepartments () {
       const result = await getDepartments()
-      this.company = { name: result.companyName, manager: '负责人' }
+      this.company = { name: result.companyName, manager: '负责人', id: '' }
       this.departs = tranListToTreeData(result.depts, '')
     },
     addDepts (node) {
+      this.showDialog = true // 显示弹层
+      this.node = node
+    },
+    editDepts (node) {
       this.showDialog = true
       this.node = node
+      // 在修改的时候 父组件调用子组件中的方法，子组件方法中调用获取部门详情的接口
+      // console.log(this.$refs.addDept)
+      this.$refs.addDept.getDepartDetail(node.id)
     }
   }
 }

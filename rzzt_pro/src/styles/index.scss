@@ -65,3 +65,7 @@ div:focus {
 .app-container {
   padding: 20px;
 }
+
+.el-textarea .el-textarea__inner {
+  resize: none;
+}

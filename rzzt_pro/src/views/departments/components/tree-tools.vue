@@ -60,7 +60,7 @@ export default {
         // 将当前点击的部门作为参数传给父组件
         this.$emit('addDepts', this.treeNode) // 触发自定义事件 告知父组件 显示弹层
       } else if (type === 'edit') { // 编辑部门
-
+        this.$emit('editDepts', this.treeNode)
       } else { // 删除部门
         this.$confirm('你确定要删除该组织部门吗', '确认信息', {
           confirmButtonText: '删除',
