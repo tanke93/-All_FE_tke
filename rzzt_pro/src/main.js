@@ -11,10 +11,12 @@ import '@/styles/index.scss' // global css
 import App from './App'
 import store from './store'
 import router from './router'
+import Components from '@/components'
 
 import '@/icons' // icon
 import '@/permission' // permission control
 import * as directives from '@/directives'
+import * as filters from '@/filters'
 
 /**
  * If you don't want to use mock-server
@@ -36,6 +38,11 @@ Vue.use(ElementUI, { locale })
 Object.keys(directives).forEach(key => {
   Vue.directive(key, directives[key]) // 注册全局的自定义指令
 })
+Object.keys(filters).forEach(key => {
+  Vue.filter(key, filters[key]) // 注册自定义过滤器
+})
+// 注册自定义组件
+Vue.use(Components)
 Vue.config.productionTip = false
 
 new Vue({
