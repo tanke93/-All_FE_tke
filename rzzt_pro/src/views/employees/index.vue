@@ -9,11 +9,13 @@
           <el-button
             size="small"
             type="success"
+            @click="$router.push('/import')"
           >excel导入</el-button>
           <el-button
             size="small"
             type="danger"
-          >excel导入</el-button>
+            @click="exportData"
+          >excel导出</el-button>
           <el-button
             size="small"
             type="primary"
@@ -81,6 +83,7 @@
             <el-button
               type="text"
               size="small"
+              @click="$router.push(`/employees/detail/${row.id}`)"
             >查看</el-button>
             <el-button
               type="text"
@@ -97,6 +100,7 @@
             <el-button
               type="text"
               size="small"
+              @click="editRole(row.id)"
             >角色</el-button>
             <el-button
               type="text"
@@ -123,6 +127,12 @@
       </el-row>
     </div>
     <AddEmployee :show-dialog.sync="showDialog" />
+    <!-- 角色权限组件 -->
+    <AssignRole
+      ref="assignRole"
+      :show-role-dialog.sync="showRoleDialog"
+      :user-id="userId"
+    />
   </div>
 </template>
 
@@ -130,9 +140,12 @@
 import { getEmployeeList, delEmployee } from '@/api/employees'
 import EmployeeEnum from '@/api/constant/employees' // 引入枚举对象
 import AddEmployee from './components/add-employee'
+import AssignRole from './components/assign-role'
+import { formatDate } from '@/filters'
 export default {
   components: {
-    AddEmployee
+    AddEmployee,
+    AssignRole
   },
   data () {
     return {
@@ -142,8 +155,10 @@ export default {
         size: 10,
         total: 0 // 总数
       },
-      loading: false,
-      showDialog: false
+      loading: false, // 显示遮罩层
+      showDialog: false, // 默认关闭弹层
+      showRoleDialog: false, // 分配角色弹层
+      userId: null
     }
   },
   created () {
@@ -175,6 +190,49 @@ export default {
       } catch (error) {
         console.log(error)
       }
+    },
+    exportData () {
+      const headers = {
+        '手机号': 'mobile',
+        '姓名': 'username',
+        '入职日期': 'timeOfEntry',
+        '聘用形式': 'formOfEmployment',
+        '转正日期': 'correctionTime',
+        '工号': 'workNumber',
+        '部门': 'departmentName'
+      }
+      import('@/vendor/Export2Excel').then(async excel => {
+        const { rows } = await getEmployeeList({ page: 1, size: this.page.total })
+        const data = this.formatJson(headers, rows)
+        const multiHeader = [['姓名', '主要信息', '', '', '', '', '部门']]
+        const merges = ['A1:A2', 'B1:F1', 'G1:G2']
+        excel.export_json_to_excel({
+          header: Object.keys(headers),
+          data,
+          filename: '员工信息表',
+          multiHeader,
+          merges
+        })
+      })
+    },
+    formatJson (headers, rows) {
+      return rows.map(item => {
+        return Object.keys(headers).map(key => {
+          if (headers[key] === 'timeOfEntry' || headers[key] === 'correctionTime') {
+            return formatDate(item[headers[key]])
+          } else if (headers[key] === 'formOfEmployment') {
+            const obj = EmployeeEnum.hireType.find(v => v.id === item[headers[key]])
+            return obj ? obj.value : '未知'
+          }
+          return item[headers[key]]
+        })
+      })
+    },
+    async editRole (id) {
+      this.userId = id
+      console.log(this.$refs.assignRole)
+      await this.$refs.assignRole.getUserDetailById(id)
+      this.showRoleDialog = true
     }
   }
 }
