@@ -3,6 +3,7 @@
  */
 import { getToken, setToken, removeToken, setTimeStamp } from '@/utils/auth'
 import { login, getUserInfo, getUserDetailById } from '@/api/user'
+import { resetRouter } from '@/router'
 const state = {
   token: getToken(), // 设置token为共享状态
   userInfo: {} // 定义个空对象 不是null nul会致使后续开发userInfo报错
@@ -45,6 +46,9 @@ const actions = {
   logout (context) {
     context.commit('removeToken')
     context.commit('removeUserInfo')
+    // 重置路由
+    resetRouter()
+    context.commit('permission/setRoutes', [], { root: true })
   }
 }
 export default {

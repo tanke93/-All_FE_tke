@@ -2,8 +2,8 @@
 import Layout from '@/layout'
 
 export default {
-  path: '/setting',
-  name: 'setting', // 权限
+  path: '/settings',
+  name: 'settings', // 权限
   component: Layout,
   children: [{
     path: '', // 二级路由的默认路由

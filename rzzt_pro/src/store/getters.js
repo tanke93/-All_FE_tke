@@ -6,6 +6,7 @@ const getters = {
   name: state => state.user.userInfo.username,
   userId: state => state.user.userInfo.userId,
   staffPhoto: state => state.user.userInfo.staffPhoto,
-  companyId: state => state.user.userInfo.companyId // 公司di快捷访问
+  companyId: state => state.user.userInfo.companyId, // 公司id快捷访问
+  routes: state => state.permission.routes // 权限模块下的快捷访问
 }
 export default getters

@@ -15,6 +15,11 @@
     >
       <i class="el-icon-plus" />
     </el-upload>
+    <el-progress
+      v-if="showPercent"
+      style="width:180px"
+      :percentage="percent"
+    />
     <el-dialog
       title="图片预览"
       :visible.sync="showDialog"
@@ -38,10 +43,12 @@ const cos = new Cos({
 export default {
   data () {
     return {
-      fileList: [{ url: 'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=3319628003,1215978953&fm=26&gp=0.jpg' }],
+      fileList: [],
       showDialog: false,
       imgUrl: '',
-      currentFileUid: null
+      currentFileUid: null,
+      percent: 0,
+      showPercent: false // 默认不显示进度条
     }
   },
   computed: {
@@ -65,7 +72,6 @@ export default {
       // 此处上传成功依赖于后续上传腾讯云COS(后台)成功，数据才能进来
     },
     beforeUpload (file) {
-      console.log(file)
       const types = ['image/jpeg', 'image/gif', 'image/bmp', 'image/png']
       if (!types.includes(file.type)) {
         this.$message.error('上传图片只能是JPG,GIF,BMP,PNG格式')
@@ -76,6 +82,9 @@ export default {
         this.$message.error('图片大小最大不能超过5M')
         return false
       }
+      // 已经确定当前上传的就是当前的这个file
+      this.currentFileUid = file.uid
+      this.showPercent = true // 显示进度条
       return true
     },
     upload (params) {
@@ -86,17 +95,29 @@ export default {
           Region: 'ap-chongqing', // 地域
           Key: params.file.name, // 文件名
           Body: params.file, // 要上传的文件对象
-          StorageClass: 'STANDARD' // 上传的模式类型（默认）
+          StorageClass: 'STANDARD', // 上传的模式类型(默认)
+          onProgress: (params) => {
+            // console.log(params)
+            this.percent = params.percent * 100
+          }
         }, (err, data) => {
-          console.log(err || data)
+          // console.log(err || data)
           if (!err && data.statusCode === 200) {
             this.fileList = this.fileList.map(item => {
               if (item.uid === this.currentFileUid) {
                 // 讲成功的地址赋值给原来的url属性
-                return { url: 'http://' + data.Location }
+                return { url: 'http://' + data.Location, upload: true }
+                // upload为true 表示这张图片已经上传成功 此处为后续应用做是否保存的标记
               }
               return item
             })
+            // 将上传成功的地址 回写到fileList中 fileList一旦变化 upload组件 就会根据fileList的变化而去渲染视图
+            // 关闭进度条
+            // 重置百分比
+            setTimeout(() => {
+              this.showPercent = false
+              this.percent = 0
+            }, 1000)
           }
         })
       }

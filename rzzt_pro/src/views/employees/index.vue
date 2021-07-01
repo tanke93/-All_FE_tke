@@ -38,6 +38,22 @@
           prop="username"
         />
         <el-table-column
+          width="120px"
+          label="头像"
+          align="center"
+        >
+          <template v-slot="{row}">
+            <img
+              slot="reference"
+              v-imagerror="require('@/assets/common/bigUserHeader.png')"
+              style="border-radius: 50%; width: 100px; height: 100px; padding: 10px"
+              :src="row.staffPhoto"
+              alt=""
+              @click="showQrCode(row.staffPhoto)"
+            >
+          </template>
+        </el-table-column>
+        <el-table-column
           label="工号"
           sortable=""
           prop="workNumber"
@@ -127,6 +143,19 @@
       </el-row>
     </div>
     <AddEmployee :show-dialog.sync="showDialog" />
+    <!-- 二维码弹层组件 -->
+    <el-dialog
+      title="二维码"
+      :visible.sync="showCodeDialog"
+      @close="imgUrl=''"
+    >
+      <el-row
+        type="flex"
+        justify="center"
+      >
+        <canvas ref="myCanvas" />
+      </el-row>
+    </el-dialog>
     <!-- 角色权限组件 -->
     <AssignRole
       ref="assignRole"
@@ -142,6 +171,7 @@ import EmployeeEnum from '@/api/constant/employees' // 引入枚举对象
 import AddEmployee from './components/add-employee'
 import AssignRole from './components/assign-role'
 import { formatDate } from '@/filters'
+import QrCode from 'qrcode'
 export default {
   components: {
     AddEmployee,
@@ -158,6 +188,7 @@ export default {
       loading: false, // 显示遮罩层
       showDialog: false, // 默认关闭弹层
       showRoleDialog: false, // 分配角色弹层
+      showCodeDialog: false, // 显示二维码弹层
       userId: null
     }
   },
@@ -227,6 +258,16 @@ export default {
           return item[headers[key]]
         })
       })
+    },
+    showQrCode (url) {
+      if (url) {
+        this.showCodeDialog = true
+        this.$nextTick(() => {
+          QrCode.toCanvas(this.$refs.myCanvas, url)
+        })
+      } else {
+        this.$message.warning('该用户还未上传头像')
+      }
     },
     async editRole (id) {
       this.userId = id

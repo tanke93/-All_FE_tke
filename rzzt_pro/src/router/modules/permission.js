@@ -2,8 +2,8 @@
 import Layout from '@/layout'
 
 export default {
-  path: '/permission',
-  name: 'permission', // 权限
+  path: '/permissions',
+  name: 'permissions', // 权限
   component: Layout,
   children: [{
     path: '', // 二级路由的默认路由
